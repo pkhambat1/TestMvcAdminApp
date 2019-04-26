@@ -65,7 +65,7 @@ namespace MvcCoreAdminApp {
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            //ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
+            ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
             //CreateUserRoles(services).Wait();
             //AssignSuperAdmin(services).Wait();
