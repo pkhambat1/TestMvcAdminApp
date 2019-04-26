@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MvcCoreAdminApp.Repositories;
 
 namespace MvcCoreAdminApp {
     public class Startup {
@@ -82,33 +83,33 @@ namespace MvcCoreAdminApp {
             }
         }
 
-        //// If all works out, this method will be obviated and not required
-        //public async Task CreateUserRoles(IServiceProvider serviceProvider) {
-        //    var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+        // If all works out, this method will be obviated and not required
+        public async Task CreateUserRoles(IServiceProvider serviceProvider) {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-        //    IDictionary<string, string> roleNamesRoleDescriptions = new Dictionary<string, string>();
+            IDictionary<string, string> roleNamesRoleDescriptions = new Dictionary<string, string>();
 
-        //    //Adding Addmin Role  
-        //    roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("User", "Just a user"));
-        //    roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("Admin", "Can View users and assign Roles"));
-        //    roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("HRManager", "Can view users"));
+            //Adding Addmin Role  
+            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("User", "Just a user"));
+            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("Admin", "Can View users and assign Roles"));
+            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("HRManager", "Can view users"));
 
-        //    foreach (KeyValuePair<string, string> item in roleNamesRoleDescriptions) {
-        //        var roleExists = await roleManager.RoleExistsAsync(item.Key);
-        //        if (!roleExists) {
-        //            // Create Role Object
-        //            var role = new Role { Name = item.Key, Description = item.Value };
-        //            // Add Roles entry to Roles db table
-        //            var roleID = AdminRepository.CreateRole(role);
+            foreach (KeyValuePair<string, string> item in roleNamesRoleDescriptions) {
+                var roleExists = await roleManager.RoleExistsAsync(item.Key);
+                if (!roleExists) {
+                    // Create Role Object
+                    var role = new Role { Name = item.Key, Description = item.Value };
+                    // Add Roles entry to Roles db table
+                    var roleID = AdminRepository.CreateRole(role);
 
-        //            // Create ApplicationRole object with RoleID from Roles table
-        //            var applicationRole = new ApplicationRole(item.Key, roleID);
-        //            // Add AspNetRoles entry to AspNetRoles Table
-        //            var result = await roleManager.CreateAsync(applicationRole);
+                    // Create ApplicationRole object with RoleID from Roles table
+                    var applicationRole = new ApplicationRole(item.Key, roleID);
+                    // Add AspNetRoles entry to AspNetRoles Table
+                    var result = await roleManager.CreateAsync(applicationRole);
 
-        //        }
-        //    }
-        //}
+                }
+            }
+        }
 
         public async Task AssignSuperAdmin(IServiceProvider services) {
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
