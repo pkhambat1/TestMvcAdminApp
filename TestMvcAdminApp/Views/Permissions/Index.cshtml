@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TestMvcAdminApp.Models.PermissionsWithRights>
+
+@{
+    ViewData["Title"] = "Permissions";
+}
+
+<h2>Permissions</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Right(s)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.Rights.First().ID <= 0) {
+                        <text>No rights</text>
+                    } else {
+                        @String.Join(", ", item.Rights.Select(right => right.Name).ToArray())
+                    }
+                </td>
+                <td>
+                    <a href="Permissions/@item.ID">Assign Rights</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("CreatePermission")" class="btn btn-primary">Create New</a>
+
+<script src="~/js/Permissions/EditRightsOfPermission.js"></script>

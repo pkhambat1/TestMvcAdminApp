@@ -68,7 +68,7 @@ namespace TestMvcAdminApp {
             });
             ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
-            //CreateUserRoles(services).Wait();
+            CreateUserRoles(services).Wait();
             AssignSuperAdmin(services).Wait();
         }
 
