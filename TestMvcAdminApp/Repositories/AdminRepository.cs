@@ -9,269 +9,269 @@ using System.Threading.Tasks;
 namespace TestMvcAdminApp.Repositories {
     public class AdminRepository {
 
-        //#region Get All - UserDetails / Roles / Permissions / Rights
+        #region Get All - UserDetails / Roles / Permissions / Rights
 
-        //public static List<UserDetailsWithRolesDTO> GetAllUsers() {
-        //    var data = new List<UserDetailsWithRolesDTO>();
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetAllUsers", con)) {
+        public static List<UserDetailsWithRolesDTO> GetAllUsers() {
+            var data = new List<UserDetailsWithRolesDTO>();
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetAllUsers", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            con.Open();
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
 
-        //                data.Add(new UserDetailsWithRolesDTO() {
+                        data.Add(new UserDetailsWithRolesDTO() {
 
-        //                    ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
-        //                    FirstName = item["FirstName"] == DBNull.Value ? "" : Convert.ToString(item["FirstName"]),
-        //                    LastName = item["LastName"] == DBNull.Value ? "" : Convert.ToString(item["LastName"]),
-        //                    CompanyName = item["CompanyName"] == DBNull.Value ? "" : Convert.ToString(item["CompanyName"]),
-        //                    Mobile = item["Mobile"] == DBNull.Value ? "" : Convert.ToString(item["Mobile"]),
-        //                    RoleID = item["RoleID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RoleID"]),
-        //                    RoleName = item["RoleName"] == DBNull.Value ? "" : Convert.ToString(item["RoleName"]),
-        //                    RoleDescription = item["RoleDescription"] == DBNull.Value ? "" : Convert.ToString(item["RoleDescription"])
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return data;
-        //}
+                            ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
+                            FirstName = item["FirstName"] == DBNull.Value ? "" : Convert.ToString(item["FirstName"]),
+                            LastName = item["LastName"] == DBNull.Value ? "" : Convert.ToString(item["LastName"]),
+                            CompanyName = item["CompanyName"] == DBNull.Value ? "" : Convert.ToString(item["CompanyName"]),
+                            Mobile = item["Mobile"] == DBNull.Value ? "" : Convert.ToString(item["Mobile"]),
+                            RoleID = item["RoleID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RoleID"]),
+                            RoleName = item["RoleName"] == DBNull.Value ? "" : Convert.ToString(item["RoleName"]),
+                            RoleDescription = item["RoleDescription"] == DBNull.Value ? "" : Convert.ToString(item["RoleDescription"])
+                        });
+                    }
+                }
+            }
+            return data;
+        }
 
-        //public static List<RolesWithPermissionsDTO> GetAllRoles() {
-        //    var data = new List<RolesWithPermissionsDTO>();
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetAllRoles", con)) {
+        public static List<RolesWithPermissionsDTO> GetAllRoles() {
+            var data = new List<RolesWithPermissionsDTO>();
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetAllRoles", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            con.Open();
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
 
-        //                data.Add(new RolesWithPermissionsDTO() {
-        //                    ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
-        //                    Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
-        //                    Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
-        //                    PermissionID = item["PermissionID"] == DBNull.Value ? 0 : Convert.ToInt32(item["PermissionID"]),
-        //                    PermissionName = item["PermissionName"] == DBNull.Value ? "" : Convert.ToString(item["PermissionName"]),
-        //                    PermissionDescription = item["PermissionDescription"] == DBNull.Value ? "" : Convert.ToString(item["PermissionDescription"])
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return data;
+                        data.Add(new RolesWithPermissionsDTO() {
+                            ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
+                            Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
+                            Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
+                            PermissionID = item["PermissionID"] == DBNull.Value ? 0 : Convert.ToInt32(item["PermissionID"]),
+                            PermissionName = item["PermissionName"] == DBNull.Value ? "" : Convert.ToString(item["PermissionName"]),
+                            PermissionDescription = item["PermissionDescription"] == DBNull.Value ? "" : Convert.ToString(item["PermissionDescription"])
+                        });
+                    }
+                }
+            }
+            return data;
 
-        //}
+        }
 
-        //public static List<PermissionsWithRightsDTO> GetAllPermissions() {
-        //    var data = new List<PermissionsWithRightsDTO>();
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetAllPermissions", con)) {
+        public static List<PermissionsWithRightsDTO> GetAllPermissions() {
+            var data = new List<PermissionsWithRightsDTO>();
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetAllPermissions", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            con.Open();
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
 
-        //                data.Add(new PermissionsWithRightsDTO() {
-        //                    ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
-        //                    Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
-        //                    Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
-        //                    RightID = item["RightID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RightID"]),
-        //                    RightName = item["RightName"] == DBNull.Value ? "" : Convert.ToString(item["RightName"]),
-        //                    RightDescription = item["RightDescription"] == DBNull.Value ? "" : Convert.ToString(item["RightDescription"])
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return data;
+                        data.Add(new PermissionsWithRightsDTO() {
+                            ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
+                            Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
+                            Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
+                            RightID = item["RightID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RightID"]),
+                            RightName = item["RightName"] == DBNull.Value ? "" : Convert.ToString(item["RightName"]),
+                            RightDescription = item["RightDescription"] == DBNull.Value ? "" : Convert.ToString(item["RightDescription"])
+                        });
+                    }
+                }
+            }
+            return data;
 
 
-        //}
+        }
 
-        //public static List<Right> GetAllRights() {
-        //    var data = new List<Right>();
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetAllRights", con)) {
+        public static List<Right> GetAllRights() {
+            var data = new List<Right>();
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetAllRights", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            con.Open();
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
 
-        //                data.Add(new Right() {
-        //                    Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
-        //                    Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"])
-        //                });
-        //            }
-        //        }
-        //    }
-        //    return data;
+                        data.Add(new Right() {
+                            Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
+                            Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"])
+                        });
+                    }
+                }
+            }
+            return data;
 
-        //}
+        }
 
-        //#endregion
+        #endregion
 
-        //#region Get By UserID - Roles / Permissions / Rights
+        #region Get By UserID - Roles / Permissions / Rights
 
-        //public static List<RolesForUserDTO> GetRolesByUserID(int userID) {
-        //    var data = new List<RolesForUserDTO>();
-        //    var rolesForUserDTO = new RolesForUserDTO();
+        public static List<RolesForUserDTO> GetRolesByUserID(int userID) {
+            var data = new List<RolesForUserDTO>();
+            var rolesForUserDTO = new RolesForUserDTO();
 
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetRolesByUserID", con)) {
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRolesByUserID", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@UserID", userID);
-        //            con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+                    con.Open();
 
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
-        //                rolesForUserDTO.UserID = item["UserID"] == DBNull.Value ? 0 : Convert.ToInt32(item["UserID"]);
-        //                rolesForUserDTO.FirstName = item["FirstName"] == DBNull.Value ? "" : Convert.ToString(item["FirstName"]);
-        //                rolesForUserDTO.LastName = item["LastName"] == DBNull.Value ? "" : Convert.ToString(item["LastName"]);
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        rolesForUserDTO.UserID = item["UserID"] == DBNull.Value ? 0 : Convert.ToInt32(item["UserID"]);
+                        rolesForUserDTO.FirstName = item["FirstName"] == DBNull.Value ? "" : Convert.ToString(item["FirstName"]);
+                        rolesForUserDTO.LastName = item["LastName"] == DBNull.Value ? "" : Convert.ToString(item["LastName"]);
 
-        //                foreach (DataRow roleItem in ds.Tables[1].Rows) {
-        //                    rolesForUserDTO.RolesWithIsAssigned.Add(new RoleWithIsAssigned() {
-        //                        ID = roleItem["ID"] == DBNull.Value ? 0 : Convert.ToInt32(roleItem["ID"]),
-        //                        Name = roleItem["Name"] == DBNull.Value ? "" : Convert.ToString(roleItem["Name"]),
-        //                        Description = roleItem["Description"] == DBNull.Value ? "" : Convert.ToString(roleItem["Description"]),
-        //                        IsAssigned = roleItem["IsAssigned"] == DBNull.Value ? false : Convert.ToBoolean(roleItem["IsAssigned"])
-        //                    });
-        //                }
-        //                data.Add(rolesForUserDTO);
-        //            };
-        //        }
-        //    }
+                        foreach (DataRow roleItem in ds.Tables[1].Rows) {
+                            rolesForUserDTO.RolesWithIsAssigned.Add(new RoleWithIsAssigned() {
+                                ID = roleItem["ID"] == DBNull.Value ? 0 : Convert.ToInt32(roleItem["ID"]),
+                                Name = roleItem["Name"] == DBNull.Value ? "" : Convert.ToString(roleItem["Name"]),
+                                Description = roleItem["Description"] == DBNull.Value ? "" : Convert.ToString(roleItem["Description"]),
+                                IsAssigned = roleItem["IsAssigned"] == DBNull.Value ? false : Convert.ToBoolean(roleItem["IsAssigned"])
+                            });
+                        }
+                        data.Add(rolesForUserDTO);
+                    };
+                }
+            }
 
-        //    return data;
-        //}
+            return data;
+        }
 
-        //public static List<PermissionsForRoleDTO> GetPermissionsByRoleID(int roleID) {
-        //    var data = new List<PermissionsForRoleDTO>();
-        //    var permissionsForRoleDTO = new PermissionsForRoleDTO();
+        public static List<PermissionsForRoleDTO> GetPermissionsByRoleID(int roleID) {
+            var data = new List<PermissionsForRoleDTO>();
+            var permissionsForRoleDTO = new PermissionsForRoleDTO();
 
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetPermissionsByRoleID", con)) {
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetPermissionsByRoleID", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@RoleID", roleID);
-        //            con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleID", roleID);
+                    con.Open();
 
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
-        //                permissionsForRoleDTO.RoleID = item["RoleID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RoleID"]);
-        //                permissionsForRoleDTO.RoleName = item["RoleName"] == DBNull.Value ? "" : Convert.ToString(item["RoleName"]);
-        //                permissionsForRoleDTO.RoleDescription = item["RoleDescription"] == DBNull.Value ? "" : Convert.ToString(item["RoleDescription"]);
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        permissionsForRoleDTO.RoleID = item["RoleID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RoleID"]);
+                        permissionsForRoleDTO.RoleName = item["RoleName"] == DBNull.Value ? "" : Convert.ToString(item["RoleName"]);
+                        permissionsForRoleDTO.RoleDescription = item["RoleDescription"] == DBNull.Value ? "" : Convert.ToString(item["RoleDescription"]);
 
-        //                foreach (DataRow permissionItem in ds.Tables[1].Rows) {
-        //                    permissionsForRoleDTO.PermissionsWithIsAssigned.Add(new PermissionWithIsAssigned() {
-        //                        ID = permissionItem["ID"] == DBNull.Value ? 0 : Convert.ToInt32(permissionItem["ID"]),
-        //                        Name = permissionItem["Name"] == DBNull.Value ? "" : Convert.ToString(permissionItem["Name"]),
-        //                        Description = permissionItem["Description"] == DBNull.Value ? "" : Convert.ToString(permissionItem["Description"]),
-        //                        IsAssigned = permissionItem["IsAssigned"] == DBNull.Value ? false : Convert.ToBoolean(permissionItem["IsAssigned"])
-        //                    });
-        //                }
-        //                data.Add(permissionsForRoleDTO);
-        //            }
+                        foreach (DataRow permissionItem in ds.Tables[1].Rows) {
+                            permissionsForRoleDTO.PermissionsWithIsAssigned.Add(new PermissionWithIsAssigned() {
+                                ID = permissionItem["ID"] == DBNull.Value ? 0 : Convert.ToInt32(permissionItem["ID"]),
+                                Name = permissionItem["Name"] == DBNull.Value ? "" : Convert.ToString(permissionItem["Name"]),
+                                Description = permissionItem["Description"] == DBNull.Value ? "" : Convert.ToString(permissionItem["Description"]),
+                                IsAssigned = permissionItem["IsAssigned"] == DBNull.Value ? false : Convert.ToBoolean(permissionItem["IsAssigned"])
+                            });
+                        }
+                        data.Add(permissionsForRoleDTO);
+                    }
 
-        //        }
-        //    }
+                }
+            }
 
-        //    return data;
-        //}
+            return data;
+        }
 
-        //public static List<RightsForPermissionDTO> GetRightsByPermissionID(int permissionID) {
-        //    var data = new List<RightsForPermissionDTO>();
-        //    var rightsForPermissionDTO = new RightsForPermissionDTO();
+        public static List<RightsForPermissionDTO> GetRightsByPermissionID(int permissionID) {
+            var data = new List<RightsForPermissionDTO>();
+            var rightsForPermissionDTO = new RightsForPermissionDTO();
 
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetRightsByPermissionID", con)) {
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRightsByPermissionID", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@PermissionID", permissionID);
-        //            con.Open();
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PermissionID", permissionID);
+                    con.Open();
 
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
-        //                rightsForPermissionDTO.PermissionID = item["PermissionID"] == DBNull.Value ? 0 : Convert.ToInt32(item["PermissionID"]);
-        //                rightsForPermissionDTO.PermissionName = item["PermissionName"] == DBNull.Value ? "" : Convert.ToString(item["PermissionName"]);
-        //                rightsForPermissionDTO.PermissionDescription = item["PermissionDescription"] == DBNull.Value ? "" : Convert.ToString(item["PermissionDescription"]);
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        rightsForPermissionDTO.PermissionID = item["PermissionID"] == DBNull.Value ? 0 : Convert.ToInt32(item["PermissionID"]);
+                        rightsForPermissionDTO.PermissionName = item["PermissionName"] == DBNull.Value ? "" : Convert.ToString(item["PermissionName"]);
+                        rightsForPermissionDTO.PermissionDescription = item["PermissionDescription"] == DBNull.Value ? "" : Convert.ToString(item["PermissionDescription"]);
 
-        //                foreach (DataRow rightItem in ds.Tables[1].Rows) {
-        //                    rightsForPermissionDTO.RightsWithIsAssigned.Add(new RightWithIsAssigned() {
-        //                        ID = rightItem["ID"] == DBNull.Value ? 0 : Convert.ToInt32(rightItem["ID"]),
-        //                        Name = rightItem["Name"] == DBNull.Value ? "" : Convert.ToString(rightItem["Name"]),
-        //                        Description = rightItem["Description"] == DBNull.Value ? "" : Convert.ToString(rightItem["Description"]),
-        //                        IsAssigned = rightItem["IsAssigned"] == DBNull.Value ? false : Convert.ToBoolean(rightItem["IsAssigned"])
-        //                    });
-        //                }
-        //                data.Add(rightsForPermissionDTO);
-        //            }
-        //        }
-        //    }
+                        foreach (DataRow rightItem in ds.Tables[1].Rows) {
+                            rightsForPermissionDTO.RightsWithIsAssigned.Add(new RightWithIsAssigned() {
+                                ID = rightItem["ID"] == DBNull.Value ? 0 : Convert.ToInt32(rightItem["ID"]),
+                                Name = rightItem["Name"] == DBNull.Value ? "" : Convert.ToString(rightItem["Name"]),
+                                Description = rightItem["Description"] == DBNull.Value ? "" : Convert.ToString(rightItem["Description"]),
+                                IsAssigned = rightItem["IsAssigned"] == DBNull.Value ? false : Convert.ToBoolean(rightItem["IsAssigned"])
+                            });
+                        }
+                        data.Add(rightsForPermissionDTO);
+                    }
+                }
+            }
 
-        //    return data;
-        //}
+            return data;
+        }
 
-        //#endregion
+        #endregion
 
         #region Create - UserDetails / Role / Permission / Right
 
-        //public static int CreateUserDetails(UserDetails model) {
-        //    var result = 0;
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("CreateUserDetails", con)) {
+        public static int CreateUserDetails(UserDetails model) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("CreateUserDetails", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@FirstName", model.FirstName);
-        //            cmd.Parameters.AddWithValue("@LastName", model.LastName);
-        //            cmd.Parameters.AddWithValue("@Mobile", model.Mobile);
-        //            cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@FirstName", model.FirstName);
+                    cmd.Parameters.AddWithValue("@LastName", model.LastName);
+                    cmd.Parameters.AddWithValue("@Mobile", model.Mobile);
+                    cmd.Parameters.AddWithValue("@CompanyName", model.CompanyName);
 
-        //            con.Open();
-        //            SqlDataReader reader = cmd.ExecuteReader();
-        //            while (reader.Read()) {
-        //                result = reader["UserDetailsID"] != DBNull.Value ? Convert.ToInt32(reader["UserDetailsID"]) : 0;
-        //            }
-        //        }
-        //    }
-        //    return result;
-        //}
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        result = reader["UserDetailsID"] != DBNull.Value ? Convert.ToInt32(reader["UserDetailsID"]) : 0;
+                    }
+                }
+            }
+            return result;
+        }
 
         public static int CreateRole(Role model) {
             var result = 0;
@@ -293,143 +293,143 @@ namespace TestMvcAdminApp.Repositories {
             return result;
         }
 
-        //public static int CreatePermission(Permission model) {
-        //    var result = 0;
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("CreatePermission", con)) {
+        public static int CreatePermission(Permission model) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("CreatePermission", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@Name", model.Name);
-        //            cmd.Parameters.AddWithValue("@Description", model.Description);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Name", model.Name);
+                    cmd.Parameters.AddWithValue("@Description", model.Description);
 
-        //            con.Open();
-        //            SqlDataReader reader = cmd.ExecuteReader();
-        //            while (reader.Read()) {
-        //                result = reader["PermissionID"] != DBNull.Value ? Convert.ToInt32(reader["PermissionID"]) : 0;
-        //            }
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        result = reader["PermissionID"] != DBNull.Value ? Convert.ToInt32(reader["PermissionID"]) : 0;
+                    }
 
-        //        }
-        //    }
-        //    return result;
-        //}
+                }
+            }
+            return result;
+        }
 
-        //public static int CreateRight(Right model) {
-        //    var result = 0;
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("CreateRight", con)) {
+        public static int CreateRight(Right model) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("CreateRight", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@Name", model.Name);
-        //            cmd.Parameters.AddWithValue("@Description", model.Description);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Name", model.Name);
+                    cmd.Parameters.AddWithValue("@Description", model.Description);
 
-        //            con.Open();
-        //            SqlDataReader reader = cmd.ExecuteReader();
-        //            while (reader.Read()) {
-        //                result = reader["RightID"] != DBNull.Value ? Convert.ToInt32(reader["RightID"]) : 0;
-        //            }
-        //        }
-        //    }
-        //    return result;
-        //}
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read()) {
+                        result = reader["RightID"] != DBNull.Value ? Convert.ToInt32(reader["RightID"]) : 0;
+                    }
+                }
+            }
+            return result;
+        }
 
         #endregion
 
-        //#region Assign - Roles / Permissions / Rights (mapping)
+        #region Assign - Roles / Permissions / Rights (mapping)
 
-        //public static int AssignRolesToUser(List<UserRoles> model) {
-        //    int result;
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("AssignRolesToUser", con)) {
-        //            cmd.CommandType = CommandType.StoredProcedure;
+        public static int AssignRolesToUser(List<UserRoles> model) {
+            int result;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("AssignRolesToUser", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-        //            cmd.Parameters.AddWithValue("@UserID", model.First().UserID);
-        //            cmd.Parameters.AddWithValue("@RoleIDs", model.First().RoleIDs);
+                    cmd.Parameters.AddWithValue("@UserID", model.First().UserID);
+                    cmd.Parameters.AddWithValue("@RoleIDs", model.First().RoleIDs);
 
-        //            con.Open();
+                    con.Open();
 
-        //            result = cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //    return result;
-        //}
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            return result;
+        }
 
-        //public static int AssignPermissionsToRole(List<RolePermissions> model) {
-        //    int result;
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("AssignPermissionsToRole", con)) {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@RoleID", model.First().RoleID);
-        //            cmd.Parameters.AddWithValue("@PermissionIDs", model.First().PermissionIDs);
-        //            con.Open();
+        public static int AssignPermissionsToRole(List<RolePermissions> model) {
+            int result;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("AssignPermissionsToRole", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleID", model.First().RoleID);
+                    cmd.Parameters.AddWithValue("@PermissionIDs", model.First().PermissionIDs);
+                    con.Open();
 
-        //            result = cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //    return result;
-        //}
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            return result;
+        }
 
-        //public static int AssignRightsToPermission(List<PermissionRights> model) {
-        //    int result;
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("AssignRightsToPermission", con)) {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@PermissionID", model.First().PermissionID);
-        //            cmd.Parameters.AddWithValue("@RightIDs", model.First().RightIDs);
-        //            con.Open();
+        public static int AssignRightsToPermission(List<PermissionRights> model) {
+            int result;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("AssignRightsToPermission", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PermissionID", model.First().PermissionID);
+                    cmd.Parameters.AddWithValue("@RightIDs", model.First().RightIDs);
+                    con.Open();
 
-        //            result = cmd.ExecuteNonQuery();
-        //        }
-        //    }
-        //    return result;
-        //}
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            return result;
+        }
 
-        //#endregion
+        #endregion
 
-        //public static string GetUserNameByUserID(int userID) {
-        //    string userName = "";
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetUserNameByUserID", con)) {
+        public static string GetUserNameByUserID(int userID) {
+            string userName = "";
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetUserNameByUserID", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@UserID", userID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserID", userID);
 
-        //            con.Open();
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
-        //                userName = item["UserName"] == DBNull.Value ? "" : Convert.ToString(item["UserName"]);
-        //            }
-        //        }
-        //    }
-        //    return userName;
-        //}
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        userName = item["UserName"] == DBNull.Value ? "" : Convert.ToString(item["UserName"]);
+                    }
+                }
+            }
+            return userName;
+        }
 
-        //public static string GetRoleNameByRoleID(int roleID) {
-        //    string roleName = "";
+        public static string GetRoleNameByRoleID(int roleID) {
+            string roleName = "";
 
-        //    using (SqlConnection con = new SqlConnection(Helper.Connection())) {
-        //        using (SqlCommand cmd = new SqlCommand("GetRoleNameByRoleID", con)) {
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRoleNameByRoleID", con)) {
 
-        //            cmd.CommandType = CommandType.StoredProcedure;
-        //            cmd.Parameters.AddWithValue("@RoleID", roleID);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleID", roleID);
 
-        //            con.Open();
-        //            /* Create instance of DataAdapter to read multiple DataSet */
-        //            var da = new SqlDataAdapter(cmd);
-        //            var ds = new DataSet();
-        //            da.Fill(ds);
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
 
-        //            /* reading multiple DataSet */
-        //            foreach (DataRow item in ds.Tables[0].Rows) {
-        //                roleName = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]);
-        //            }
-        //        }
-        //    }
-        //    return roleName;
-        //}
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        roleName = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]);
+                    }
+                }
+            }
+            return roleName;
+        }
     }
 }
