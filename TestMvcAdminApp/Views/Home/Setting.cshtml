@@ -1,0 +1,6 @@
+﻿
+@{
+    ViewData["Title"] = "Setting";
+}
+
+<h3>Hello @User.Identity.Name: Role @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value</h3>

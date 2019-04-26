@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -29,11 +34,33 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">TestMvcAdminApp</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-left">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="UserDetails" asp-action="Index">User Details</a></li>
+                    <li><a asp-area="" asp-controller="Roles" asp-action="Index">Roles</a></li>
+                    <li><a asp-area="" asp-controller="Permissions" asp-action="Index">Permissions</a></li>
+                    <li><a asp-area="" asp-controller="Rights" asp-action="Index">Rights</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Setting">Setting</a></li>
                 </ul>
+                @if (SignInManager.IsSignedIn(User)) {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a asp-area="" asp-controller="" asp-action="">Hello @User.Identity.Name!</a></li>
+                        <li>
+                            <a class="dropdown-item" href="@Url.Action("Logout", "Account")"> Logout</a>
+                        </li>
+                    </ul>
+                } else {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a asp-action="Register" asp-controller="Account" >Register</a>
+                        </li>
+                        <li>
+                            <a asp-action="Login" asp-controller="Account">Login</a>
+                        </li>
+                    </ul>
+                }
             </div>
         </div>
     </nav>
@@ -44,7 +71,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2019 - TestMvcAdminApp</p>
+            <p>&copy; @DateTime.Now.Year.ToString() - TestMvcAdminApp</p>
         </footer>
     </div>
 
