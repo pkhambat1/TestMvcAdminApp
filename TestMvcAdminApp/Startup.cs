@@ -68,19 +68,19 @@ namespace MvcCoreAdminApp {
             ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
             //CreateUserRoles(services).Wait();
-            //AssignSuperAdmin(services).Wait();
+            AssignSuperAdmin(services).Wait();
         }
 
-        //public static string GetConnectionString() {
-        //    return ConnectionString;
-        //}
+        public static string GetConnectionString() {
+            return ConnectionString;
+        }
 
-        //protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        //    if (!optionsBuilder.IsConfigured) {
-        //        var con = GetConnectionString();
-        //        optionsBuilder.UseSqlServer(con);
-        //    }
-        //}
+        protected void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            if (!optionsBuilder.IsConfigured) {
+                var con = GetConnectionString();
+                optionsBuilder.UseSqlServer(con);
+            }
+        }
 
         //// If all works out, this method will be obviated and not required
         //public async Task CreateUserRoles(IServiceProvider serviceProvider) {
@@ -110,11 +110,11 @@ namespace MvcCoreAdminApp {
         //    }
         //}
 
-        //public async Task AssignSuperAdmin(IServiceProvider services) {
-        //    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-        //    //Assign Admin role to the main User here we have given our newly registered login id for Admin management  
-        //    ApplicationUser user = await userManager.FindByEmailAsync("pezanne2@email.com");
-        //    await userManager.AddToRoleAsync(user, "Admin");
-        //}
+        public async Task AssignSuperAdmin(IServiceProvider services) {
+            var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            //Assign Admin role to the main User here we have given our newly registered login id for Admin management  
+            ApplicationUser user = await userManager.FindByEmailAsync("pezanne2@email.com");
+            await userManager.AddToRoleAsync(user, "Admin");
+        }
     }
 }
