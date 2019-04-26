@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MvcCoreAdminApp.Data;
-using MvcCoreAdminApp.Models;
+using TestMvcAdminApp.Data;
+using TestMvcAdminApp.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,9 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using MvcCoreAdminApp.Repositories;
+using TestMvcAdminApp.Repositories;
 
-namespace MvcCoreAdminApp {
+namespace TestMvcAdminApp {
     public class Startup {
 
         public IConfigurationRoot Configuration { get; set; }

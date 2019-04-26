@@ -1,4 +1,4 @@
-﻿using MvcCoreAdminApp.Models;
+﻿using TestMvcAdminApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MvcCoreAdminApp.Repositories {
+namespace TestMvcAdminApp.Repositories {
     public class AdminRepository {
 
         //#region Get All - UserDetails / Roles / Permissions / Rights

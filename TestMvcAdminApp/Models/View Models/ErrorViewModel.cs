@@ -1,6 +1,6 @@
 using System;
 
-namespace TestMvcAdminApp.Models {
+namespace TestMvcAdminApp {
     public class ErrorViewModel {
         public string RequestId { get; set; }
 

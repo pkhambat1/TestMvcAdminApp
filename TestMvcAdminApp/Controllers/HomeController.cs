@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using TestMvcAdminApp.Models;
+using TestMvcAdminApp;
 
 namespace TestMvcAdminApp.Controllers {
     public class HomeController : Controller {

@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace TestMvcAdminApp.Models {
-    public class Role {
+    public class Right {
         public int ID { get; set; }
-        [Required, Display(Name = "Role")]
+        [Required, Display(Name = "Right")]
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }

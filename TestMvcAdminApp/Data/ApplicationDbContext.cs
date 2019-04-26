@@ -1,4 +1,4 @@
-﻿using MvcCoreAdminApp.Models;
+﻿using TestMvcAdminApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace MvcCoreAdminApp.Data {
+namespace TestMvcAdminApp.Data {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string> {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
