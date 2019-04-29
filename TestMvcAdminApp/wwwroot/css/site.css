@@ -35,3 +35,11 @@ body {
         display: none;
     }
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+.blueTr {
+    background-color: #b8daff;
+}

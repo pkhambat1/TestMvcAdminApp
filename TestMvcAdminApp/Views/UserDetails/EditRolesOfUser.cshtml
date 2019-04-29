@@ -1,6 +1,7 @@
 ﻿@model TestMvcAdminApp.Models.RolesForUserDTO
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Assign Roles";
 }
 
@@ -25,12 +26,21 @@
                     </thead>
                     <tbody>
                         @for (int i = 0; i < Model.RolesWithIsAssigned.Count; i++) {
-                            <tr>
-                                @Html.HiddenFor(m => Model.RolesWithIsAssigned[i].ID)
-                                <td>@Html.CheckBoxFor(m => Model.RolesWithIsAssigned[i].IsAssigned)</td>
-                                <td>@Html.DisplayFor(m => Model.RolesWithIsAssigned[i].Name)</td>
-                                <td>@Html.DisplayFor(m => Model.RolesWithIsAssigned[i].Description)</td>
-                            </tr>
+                            @if (Model.RolesWithIsAssigned[i].IsAssigned) {
+                                <tr class="clickable blueTr">
+                                    @Html.HiddenFor(m => Model.RolesWithIsAssigned[i].ID)
+                                    <td>@Html.CheckBoxFor(m => Model.RolesWithIsAssigned[i].IsAssigned)</td>
+                                    <td>@Html.DisplayFor(m => Model.RolesWithIsAssigned[i].Name)</td>
+                                    <td>@Html.DisplayFor(m => Model.RolesWithIsAssigned[i].Description)</td>
+                                </tr>
+                            } else {
+                                <tr class="clickable">
+                                    @Html.HiddenFor(m => Model.RolesWithIsAssigned[i].ID)
+                                    <td>@Html.CheckBoxFor(m => Model.RolesWithIsAssigned[i].IsAssigned)</td>
+                                    <td>@Html.DisplayFor(m => Model.RolesWithIsAssigned[i].Name)</td>
+                                    <td>@Html.DisplayFor(m => Model.RolesWithIsAssigned[i].Description)</td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -45,6 +55,8 @@
 <div>
     <a href="@Url.Action("Index")">Back to List</a>
 </div>
+
+<script src="~/js/UserDetails/EditRolesOfUser.js"></script>
 
 
 
