@@ -5,9 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 
 public class ClaimRequirementAttribute : TypeFilterAttribute {
-
-    private readonly AuthorizationFilterContext _context;
-
     public ClaimRequirementAttribute(string claimType, string claimValue) : base(typeof(ClaimRequirementFilter)) {
         Arguments = new object[] { new Claim(claimType, claimValue) };
     }
@@ -26,7 +23,9 @@ public class ClaimRequirementFilter : IAuthorizationFilter {
         var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
 
         if (!hasClaim) {
-            context.Result = new ForbidResult();
+            // Set the response code to 401.
+            context.HttpContext.Response.StatusCode = 401;
+            context.Result = new RedirectResult("~/Account/AuthorizeFailed");
         }
     }
 }

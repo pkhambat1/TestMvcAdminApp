@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Routing;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
+using System.Net;
 
 namespace TestMvcAdminApp {
     public class Startup {
@@ -68,13 +69,6 @@ namespace TestMvcAdminApp {
 
             app.UseMvc(GetRoutes);
             ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
-
-            // setup routes
-            app.UseGetRoutesMiddleware(GetRoutes);
-
-            app.Run(async context => {
-                await context.Response.WriteAsync("Page Unavailable");
-            });
 
             CreateAdminRole(services).Wait();
             AssignSuperAdmin(services).Wait();
