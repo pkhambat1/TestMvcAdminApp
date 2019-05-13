@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using TestMvcAdminApp;
 using TestMvcAdminApp.Models;
 using TestMvcAdminApp.Repositories;
@@ -15,11 +16,9 @@ namespace MvcCoreAdminApp.Controllers {
     [Authorize]
     public class PermissionsController : Controller {
 
-        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IServiceProvider _serviceProvider;
 
-        public PermissionsController(RoleManager<ApplicationRole> roleManager, IServiceProvider serviceProvider) {
-            _roleManager = roleManager;
+        public PermissionsController(IServiceProvider serviceProvider) {
             _serviceProvider = serviceProvider;
         }
 
@@ -68,7 +67,7 @@ namespace MvcCoreAdminApp.Controllers {
         [HttpPost]
         [Route("Permissions/{PermissionID}")]
         public async Task<IActionResult> EditRightsOfPermission(RightsForPermissionDTO model) {
-
+            var roleManager = _serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var permissionRights = new List<AssignRightsToPermission>();
             var permissionRightIDs = new List<string>();
             foreach (var right in model.RightsWithIsAssigned) {
@@ -105,12 +104,15 @@ namespace MvcCoreAdminApp.Controllers {
                 // Update RoleRights Table - Delete all values where Role ID is RoleID and Insert RoleRights model
                 AdminRepository.AssignRightsToRole(listAssignRightsToRole);
 
+                // Get Application Role
+                var applicationRole = roleManager.FindByNameAsync(roleItem.Name).Result;
+
                 // Modify Identity Table AspNetRoleClaims
                 foreach (var rightID in allRightIDs) {
                     if (permissionRightIDs.Contains(rightID)) {
-                        await _roleManager.AddClaimAsync(new ApplicationRole(roleItem.Name, roleItem.ID), new Claim(AdminRepository.GetRightNameByRightID(int.Parse(rightID)), "True"));
+                        await roleManager.AddClaimAsync(applicationRole, new Claim(AdminRepository.GetRightNameByRightID(int.Parse(rightID)), "True"));
                     } else {
-                        await _roleManager.RemoveClaimAsync(new ApplicationRole(roleItem.Name, roleItem.ID), new Claim(AdminRepository.GetRightNameByRightID(int.Parse(rightID)), "True"));
+                        await roleManager.RemoveClaimAsync(applicationRole, new Claim(AdminRepository.GetRightNameByRightID(int.Parse(rightID)), "True"));
                     }
                 }
             }

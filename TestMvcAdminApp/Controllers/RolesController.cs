@@ -16,11 +16,9 @@ namespace MvcCoreAdminApp.Controllers {
     [Authorize]
     public class RolesController : Controller {
 
-        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IServiceProvider _serviceProvider;
 
-        public RolesController(RoleManager<ApplicationRole> roleManager, IServiceProvider serviceProvider) {
-            _roleManager = roleManager;
+        public RolesController(IServiceProvider serviceProvider) {
             _serviceProvider = serviceProvider;
         }
 
