@@ -1,27 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using TestMvcAdminApp.Data;
 using TestMvcAdminApp.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TestMvcAdminApp.Repositories;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace TestMvcAdminApp {
     public class Startup {
 
         public IConfigurationRoot Configuration { get; set; }
         public static string ConnectionString { get; private set; }
+        private readonly Action<IRouteBuilder> GetRoutes = routes => {
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id?}");
+        };
 
         public Startup(IHostingEnvironment env) {
             Configuration = new ConfigurationBuilder()
@@ -39,8 +43,9 @@ namespace TestMvcAdminApp {
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                                                     .AddEntityFrameworkStores<ApplicationDbContext>()
                                                     .AddDefaultTokenProviders();
-            services.AddMvc();
 
+            services.AddMvc();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,14 +66,17 @@ namespace TestMvcAdminApp {
             app.UseCookiePolicy();
             app.UseAuthentication();
 
-            app.UseMvc(routes => {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc(GetRoutes);
             ConnectionString = Configuration["ConnectionStrings:DefaultConnection"];
 
-            CreateUserRoles(services).Wait();
+            // setup routes
+            app.UseGetRoutesMiddleware(GetRoutes);
+
+            app.Run(async context => {
+                await context.Response.WriteAsync("Page Unavailable");
+            });
+
+            CreateAdminRole(services).Wait();
             AssignSuperAdmin(services).Wait();
         }
 
@@ -84,29 +92,30 @@ namespace TestMvcAdminApp {
         }
 
         // If all works out, this method will be obviated and not required
-        public async Task CreateUserRoles(IServiceProvider serviceProvider) {
+        public async Task CreateAdminRole(IServiceProvider serviceProvider) {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
             IDictionary<string, string> roleNamesRoleDescriptions = new Dictionary<string, string>();
 
-            //Adding Addmin Role  
-            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("User", "Just a user"));
-            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("Admin", "Can View users and assign Roles"));
-            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>("HRManager", "Can view users"));
+            // Super Admin
+            var superAdminRoleName = "IT Admin";
 
-            foreach (KeyValuePair<string, string> item in roleNamesRoleDescriptions) {
-                var roleExists = await roleManager.RoleExistsAsync(item.Key);
+            //Adding Admin Role  
+            roleNamesRoleDescriptions.Add(new KeyValuePair<string, string>(superAdminRoleName, ""));
+
+            foreach (var roleItem in roleNamesRoleDescriptions) {
+                var roleExists = await roleManager.RoleExistsAsync(roleItem.Key);
                 if (!roleExists) {
-                    // Create Role Object
-                    var role = new Role { Name = item.Key, Description = item.Value };
-                    // Add Roles entry to Roles db table
-                    var roleID = AdminRepository.CreateRole(role);
-
                     // Create ApplicationRole object with RoleID from Roles table
-                    var applicationRole = new ApplicationRole(item.Key, roleID);
+                    var applicationRole = new ApplicationRole(roleItem.Key, 0);
                     // Add AspNetRoles entry to AspNetRoles Table
-                    var result = await roleManager.CreateAsync(applicationRole);
-
+                    await roleManager.CreateAsync(applicationRole);
+                    // Create Role-Claim mapping with default value "false"  
+                    var claims = AdminRepository.GetAllRights();
+                    // Assign all Claims to IT Admin hidden role
+                    foreach (var claimItem in claims) {
+                        await roleManager.AddClaimAsync(applicationRole, new Claim(claimItem.Name, "True"));
+                    }
                 }
             }
         }
@@ -115,7 +124,7 @@ namespace TestMvcAdminApp {
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
             //Assign Admin role to the main User here we have given our newly registered login id for Admin management  
             ApplicationUser user = await userManager.FindByEmailAsync("pezanne2@email.com");
-            await userManager.AddToRoleAsync(user, "Admin");
+                await userManager.AddToRoleAsync(user, "IT Admin");
         }
     }
 }

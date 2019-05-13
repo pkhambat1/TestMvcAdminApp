@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TestMvcAdminApp.Models {
+﻿namespace TestMvcAdminApp.Models {
     public class EditRolesOfUser {
         public int UserID { get; set; }
         public string FirstName { get; set; }

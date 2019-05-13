@@ -20,13 +20,5 @@ namespace TestMvcAdminApp.Data {
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-        //public DbSet<UserDetails> UserDetails { get; set; }
-
-        //public DbSet<Role> Role { get; set; }
-
-        //public DbSet<Right> Right { get; set; }
-
-        //public DbSet<Permission> Permission { get; set; }
-
     }
 }

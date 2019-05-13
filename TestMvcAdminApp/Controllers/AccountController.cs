@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TestMvcAdminApp.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TestMvcAdminApp.Repositories;
-using Microsoft.Extensions.Logging;
 
 namespace MvcCoreAdminApp.Controllers {
 
@@ -30,45 +23,41 @@ namespace MvcCoreAdminApp.Controllers {
             _roleManager = roleManager;
         }
 
-
-        #region Register
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null) {
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Register(RegisterUser model, string returnUrl = null) {
-        //    if (ModelState.IsValid) {
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegisterUser model, string returnUrl = null) {
+            if (ModelState.IsValid) {
 
-        //        // Create UserDetails object 
-        //        var userDetails = new UserDetails { FirstName = model.FirstName, LastName = model.LastName, Mobile = model.Mobile, CompanyName = model.CompanyName };
-        //        // Add UserDetails entry to UserDetails db table
-        //        var userID = AdminRepository.CreateUserDetails(userDetails);
-        //        // Create Users object with UserID foreign key from UserDetails table
-        //        var user = new ApplicationUser { UserID = userID, Email = model.Email, UserName = model.UserName };
-        //        // Add AspNetUsers entry to AspNetUsers Db
-        //        var result = await _userManager.CreateAsync(user, model.Password);
+                // Create UserDetails object 
+                var userDetails = new UserDetails { FirstName = model.FirstName, LastName = model.LastName, Mobile = model.Mobile, CompanyName = model.CompanyName };
+                // Add UserDetails entry to UserDetails db table
+                var userID = AdminRepository.CreateUserDetails(userDetails);
+                // Create Users object with UserID foreign key from UserDetails table
+                var user = new ApplicationUser { UserID = userID, Email = model.Email, UserName = model.UserName };
+                // Add AspNetUsers entry to AspNetUsers Db
+                var result = await _userManager.CreateAsync(user, model.Password);
 
-        //        if (result.Succeeded) {
-        //            // Sign in user
-        //            await _signInManager.SignInAsync(user, false);
-        //            return RedirectToAction("Index", "Home");
+                if (result.Succeeded) {
+                    // Sign in user
+                    await _signInManager.SignInAsync(user, false);
+                    return RedirectToAction("Index", "Home");
 
-        //        } else {
-        //            foreach (var error in result.Errors) {
-        //                ModelState.AddModelError("", error.Description);
-        //            }
-        //        }
-        //    }
+                } else {
+                    foreach (var error in result.Errors) {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
 
-        //    return View(model);
-        //}
-        #endregion
+            return View(model);
+        }
 
-        #region Login
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null) {
@@ -97,6 +86,10 @@ namespace MvcCoreAdminApp.Controllers {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
-        #endregion
+
+        public IActionResult AuthorizeFailed() {
+            return View();
+        }
+
     }
 }

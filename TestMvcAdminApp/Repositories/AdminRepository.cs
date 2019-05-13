@@ -11,8 +11,8 @@ namespace TestMvcAdminApp.Repositories {
 
         #region Get All - UserDetails / Roles / Permissions / Rights
 
-        public static List<UserDetailsWithRolesDTO> GetAllUsers() {
-            var data = new List<UserDetailsWithRolesDTO>();
+        public static List<UserDetailsWithRoleDTO> GetAllUsers() {
+            var data = new List<UserDetailsWithRoleDTO>();
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("GetAllUsers", con)) {
 
@@ -26,7 +26,7 @@ namespace TestMvcAdminApp.Repositories {
                     /* reading multiple DataSet */
                     foreach (DataRow item in ds.Tables[0].Rows) {
 
-                        data.Add(new UserDetailsWithRolesDTO() {
+                        data.Add(new UserDetailsWithRoleDTO() {
 
                             ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
                             FirstName = item["FirstName"] == DBNull.Value ? "" : Convert.ToString(item["FirstName"]),
@@ -43,8 +43,8 @@ namespace TestMvcAdminApp.Repositories {
             return data;
         }
 
-        public static List<RolesWithPermissionsDTO> GetAllRoles() {
-            var data = new List<RolesWithPermissionsDTO>();
+        public static List<RoleWithPermissionDTO> GetAllRoles() {
+            var data = new List<RoleWithPermissionDTO>();
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("GetAllRoles", con)) {
 
@@ -58,7 +58,7 @@ namespace TestMvcAdminApp.Repositories {
                     /* reading multiple DataSet */
                     foreach (DataRow item in ds.Tables[0].Rows) {
 
-                        data.Add(new RolesWithPermissionsDTO() {
+                        data.Add(new RoleWithPermissionDTO() {
                             ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
                             Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
                             Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
@@ -73,8 +73,8 @@ namespace TestMvcAdminApp.Repositories {
 
         }
 
-        public static List<PermissionsWithRightsDTO> GetAllPermissions() {
-            var data = new List<PermissionsWithRightsDTO>();
+        public static List<PermissionWithRightDTO> GetAllPermissions() {
+            var data = new List<PermissionWithRightDTO>();
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("GetAllPermissions", con)) {
 
@@ -88,7 +88,7 @@ namespace TestMvcAdminApp.Repositories {
                     /* reading multiple DataSet */
                     foreach (DataRow item in ds.Tables[0].Rows) {
 
-                        data.Add(new PermissionsWithRightsDTO() {
+                        data.Add(new PermissionWithRightDTO() {
                             ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
                             Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
                             Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
@@ -129,6 +129,26 @@ namespace TestMvcAdminApp.Repositories {
             return data;
 
         }
+
+        public static List<string> GetAllRightIDs() {
+            var data = new List<string>();
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetAllRightIDs", con)) {
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        data.Add(item[0] == DBNull.Value ? "" : Convert.ToString
+(item[0]));
+                    }
+                }
+            }
+            return data;
+        }    
 
         #endregion
 
@@ -248,6 +268,61 @@ namespace TestMvcAdminApp.Repositories {
             return data;
         }
 
+        public static List<Role> GetRolesHavingPermission(int permissionID) {
+            var data = new List<Role>();
+
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRolesHavingPermission", con)) {
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PermissionID", permissionID);
+                    con.Open();
+
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        data.Add(new Role {
+                            ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
+                            Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
+                            Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"])
+                        });
+                    }
+                }
+            }
+            return data;
+        }
+
+        public static List<Right> GetRightsHavingPermissions(string permissionIDs) {
+            var data = new List<Right>();
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRightsHavingPermissions", con)) {
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PermissionIDs", permissionIDs);
+                    con.Open();
+
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        data.Add(new Right {
+                            ID = item["ID"] == DBNull.Value ? 0 : Convert.ToInt32(item["ID"]),
+                            Name = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]),
+                            Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"])
+                        });
+                    }
+                }
+            }
+            return data;
+        }
+
         #endregion
 
         #region Create - UserDetails / Role / Permission / Right
@@ -336,7 +411,7 @@ namespace TestMvcAdminApp.Repositories {
 
         #region Assign - Roles / Permissions / Rights (mapping)
 
-        public static int AssignRolesToUser(List<UserRoles> model) {
+        public static int AssignRolesToUser(List<AssignRolesToUser> model) {
             int result;
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("AssignRolesToUser", con)) {
@@ -353,7 +428,7 @@ namespace TestMvcAdminApp.Repositories {
             return result;
         }
 
-        public static int AssignPermissionsToRole(List<RolePermissions> model) {
+        public static int AssignPermissionsToRole(List<AssignPermissionsToRole> model) {
             int result;
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("AssignPermissionsToRole", con)) {
@@ -368,7 +443,7 @@ namespace TestMvcAdminApp.Repositories {
             return result;
         }
 
-        public static int AssignRightsToPermission(List<PermissionRights> model) {
+        public static int AssignRightsToPermission(List<AssignRightsToPermission> model) {
             int result;
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("AssignRightsToPermission", con)) {
@@ -383,7 +458,24 @@ namespace TestMvcAdminApp.Repositories {
             return result;
         }
 
+        public static int AssignRightsToRole(List<AssignRightsToRole> model) {
+            int result;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("AssignRightsToRole", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleID", model.First().RoleID);
+                    cmd.Parameters.AddWithValue("@RightIDs", model.First().RightIDs);
+                    con.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            return result;
+        }
+
         #endregion
+
+        #region Get Name by ID
 
         public static string GetUserNameByUserID(int userID) {
             string userName = "";
@@ -431,5 +523,32 @@ namespace TestMvcAdminApp.Repositories {
             }
             return roleName;
         }
+
+        public static string GetRightNameByRightID(int rightID) {
+
+            string roleName = "";
+
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRightNameByRightID", con)) {
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RightID", rightID);
+
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        roleName = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]);
+                    }
+                }
+            }
+            return roleName;
+        }
+
+        #endregion
     }
 }

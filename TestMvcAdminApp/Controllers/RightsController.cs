@@ -8,13 +8,16 @@ using TestMvcAdminApp.Models;
 using TestMvcAdminApp.Repositories;
 
 namespace MvcCoreAdminApp.Controllers {
-    [Authorize(Roles = "Admin")]
+    
     public class RightsController : Controller {
+
+        [ClaimRequirement("Rights-Index", "True")]
         public IActionResult Index() {
             var allRights = AdminRepository.GetAllRights();
             return View(allRights);
         }
 
+        [ClaimRequirement("Rights-CreateRight", "True")]
         [HttpGet, Route("Rights/CreateNew")]
         public IActionResult CreateRight() {
             return View();

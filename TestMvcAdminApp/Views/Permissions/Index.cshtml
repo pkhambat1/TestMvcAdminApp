@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestMvcAdminApp.Models.PermissionsWithRights>
+﻿@model IEnumerable<TestMvcAdminApp.Models.PermissionWithRights>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +16,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+            <th style="width: 50%">
                 Right(s)
             </th>
             <th>
@@ -35,13 +35,13 @@
                 </td>
                 <td>
                     @if (item.Rights.First().ID <= 0) {
-                        <text>No rights</text>
+                        <text><i>No rights</i></text>
                     } else {
                         @String.Join(", ", item.Rights.Select(right => right.Name).ToArray())
                     }
                 </td>
                 <td>
-                    <a href="Permissions/@item.ID">Assign Rights</a>
+                    <a class="btn btn-info" href="Permissions/@item.ID">Assign Rights</a>
                 </td>
             </tr>
         }

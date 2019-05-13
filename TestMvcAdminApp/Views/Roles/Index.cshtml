@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TestMvcAdminApp.Models.RolesWithPermissions>
+﻿@model IEnumerable<TestMvcAdminApp.Models.RoleWithPermissions>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,7 +16,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+            <th style="width: 50%">
                 Permission(s)
             </th>
             <th>
@@ -35,13 +35,13 @@
                 </td>
                 <td>
                     @if (item.Permissions.First().ID <= 0) {
-                        <text>No permissions</text>
+                        <text><i>No permissions</i></text>
                     } else {
                         @String.Join(", ", item.Permissions.Select(permission => permission.Name).ToArray())
                     }
                 </td>
                 <td>
-                    <a href="Roles/@item.ID">Assign Permissions</a>
+                    <a class="btn btn-info" href="Roles/@item.ID">Assign Permissions</a>
                 </td>
             </tr>
         }

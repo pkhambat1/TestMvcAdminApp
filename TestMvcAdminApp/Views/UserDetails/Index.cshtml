@@ -22,7 +22,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Mobile)
             </th>
-            <th>
+            <th style="width: 50%">
                 Role(s)
             </th>
             <th>
@@ -47,13 +47,13 @@
                 </td>
                 <td>
                     @if (item.Roles.First().ID <= 0) {
-                        <text>No roles</text>
+                        <text><i>No roles</i></text>
                     } else {
                         @String.Join(", ", item.Roles.Select(role => role.Name).ToArray())
                     }
                 </td>
                 <td>
-                    <a href="UserDetails/@item.ID">Assign Roles</a>
+                    <a class="btn btn-info" href="UserDetails/@item.ID">Assign Roles</a>
                 </td>
             </tr>
         }
