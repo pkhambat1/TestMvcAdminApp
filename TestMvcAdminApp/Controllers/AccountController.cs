@@ -24,7 +24,6 @@ namespace MvcCoreAdminApp.Controllers {
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public IActionResult Register(string returnUrl = null) {
             return View();
         }
@@ -90,6 +89,5 @@ namespace MvcCoreAdminApp.Controllers {
         public IActionResult AuthorizeFailed() {
             return View();
         }
-
     }
 }

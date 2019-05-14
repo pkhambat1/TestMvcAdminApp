@@ -19,8 +19,7 @@ namespace MvcCoreAdminApp.Controllers {
             _userManager = userManager;
         }
 
-        [ClaimRequirement("UserDetails-Index", "True")]
-        //[claimrequirement]
+        [ClaimRequirement]
         public IActionResult Index() {
             var model = AdminRepository.GetAllUsers();
 
@@ -39,8 +38,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(allUsersWithRoles);
         }
 
-        #region Edit Roles
-        [ClaimRequirement("UserDetails-EditRolesOfUser", "True")]
+        [ClaimRequirement]
         [HttpGet, Route("UserDetails/{UserID}")]
         public IActionResult EditRolesOfUser(int userID) {
             var rolesList = AdminRepository.GetRolesByUserID(userID);
@@ -48,6 +46,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(roles);
         }
 
+        [ClaimRequirement]
         [HttpPost, Route("UserDetails/{UserID}")]
         public async Task<IActionResult> EditRolesOfUser(RolesForUserDTO model) {
             var userRoles = new List<AssignRolesToUser>();
@@ -83,6 +82,5 @@ namespace MvcCoreAdminApp.Controllers {
             return RedirectToAction("Index");
         }
 
-        #endregion
     }
 }

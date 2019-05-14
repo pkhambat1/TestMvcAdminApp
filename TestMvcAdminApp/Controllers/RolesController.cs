@@ -22,7 +22,6 @@ namespace MvcCoreAdminApp.Controllers {
             _serviceProvider = serviceProvider;
         }
 
-        [ClaimRequirement("Roles-Index", "True")]
         public IActionResult Index() {
             var model = AdminRepository.GetAllRoles();
 
@@ -39,7 +38,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(allRolesWithPermissions);
         }
 
-        [ClaimRequirement("Roles-CreateRole", "True")]
+        [ClaimRequirement]
         [HttpGet, Route("Roles/CreateNew")]
         public IActionResult CreateRole() {
             return View();
@@ -59,8 +58,7 @@ namespace MvcCoreAdminApp.Controllers {
             return RedirectToAction("Index");
         }
 
-        #region Edit Permissions
-        [ClaimRequirement("Roles-EditPermissionsOfRole", "True")]
+        [ClaimRequirement]
         [HttpGet, Route("Roles/{RoleID}")]
         public IActionResult EditPermissionsOfRole(int roleID) {
             var permissionsList = AdminRepository.GetPermissionsByRoleID(roleID);
@@ -124,7 +122,5 @@ namespace MvcCoreAdminApp.Controllers {
             await HttpContext.RefreshLoginAsync();
             return RedirectToAction("Index");
         }
-
-        #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace MvcCoreAdminApp.Controllers {
             _serviceProvider = serviceProvider;
         }
 
-        [ClaimRequirement("Permissions-Index", "True")]
+        [ClaimRequirement]
         public IActionResult Index() {
             var model = AdminRepository.GetAllPermissions();
 
@@ -39,7 +39,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(allPermissionsWithRights);
         }
 
-        [ClaimRequirement("Permissions-CreatePermission", "True")]
+        [ClaimRequirement]
         [HttpGet, Route("Permissions/CreateNew")]
         public IActionResult CreatePermission() {
             return View();
@@ -54,8 +54,7 @@ namespace MvcCoreAdminApp.Controllers {
             return RedirectToAction("Index");
         }
 
-        #region Edit Rights
-        [ClaimRequirement("Permissions-EditRightsOfPermission", "True")]
+        [ClaimRequirement]
         [HttpGet]
         [Route("Permissions/{PermissionID}")]
         public IActionResult EditRightsOfPermission(int permissionID) {
@@ -79,6 +78,7 @@ namespace MvcCoreAdminApp.Controllers {
             var modelToList = new List<RightsForPermissionDTO> {
                 model
             };
+
             permissionRights = modelToList.GroupBy(x => new { x.PermissionID }).Select(y =>
             new AssignRightsToPermission {
                 PermissionID = y.Key.PermissionID,
@@ -119,8 +119,5 @@ namespace MvcCoreAdminApp.Controllers {
             await HttpContext.RefreshLoginAsync();
             return RedirectToAction("Index");
         }
-
-        #endregion
-
     }
 }
