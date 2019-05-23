@@ -51,7 +51,7 @@
             </div>
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav navbar-left mr-auto">
-                    <li class="nav item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="dropdown nav-item">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                             Admin
@@ -66,9 +66,14 @@
                 </ul>
                 @if (SignInManager.IsSignedIn(User)) {
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index">@User.Identity.Name!: @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value</a></li>
-                        <li class="nav-item">
-                            <a class="dropdown-item" href="@Url.Action("Logout", "Account")"> Logout</a>
+                        <li class="dropdown nav-item">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                @User.Identity.Name: @User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-controller="Account" asp-action="Logout">Logout</a></li>
+                            </ul>
                         </li>
                     </ul>
                 } else {
