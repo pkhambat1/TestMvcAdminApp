@@ -12,10 +12,10 @@
         <div class="col-md-6 col-12">
             @using (Html.BeginForm("EditPermissionsOfRole", "Roles", FormMethod.Post)) {
                 @Html.HiddenFor(m => m.RoleName)
-                <table class="table table-hover">
+                <table class="table table-responsive table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th></th>
+                            <th style="width: 50px"></th>
                             <th>
                                 @Html.DisplayNameFor(model => model.PermissionsWithIsAssigned.First().Name)
                             </th>

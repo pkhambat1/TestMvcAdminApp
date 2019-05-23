@@ -6,8 +6,7 @@
 }
 
 <h2>Roles</h2>
-
-<table class="table">
+<table class="table table-responsive table-bordered table-striped">
     <thead>
         <tr>
             <th>
@@ -19,7 +18,7 @@
             <th style="width: 50%">
                 Permission(s)
             </th>
-            <th>
+            <th style="width: 240px">
                 Actions
             </th>
         </tr>
@@ -41,7 +40,8 @@
                     }
                 </td>
                 <td>
-                    <a class="btn btn-info" href="Roles/@item.ID">Assign Permissions</a>
+                    @Html.ActionLink("Assign Permissions", "EditPermissionsOfRole", "Roles", new { roleID = item.ID }, new { @class = "btn btn-info" })
+                    <button class="btn btn-danger deleteRole text-center" id="confirmDelete" data-target="#deleteModal" data-id="@item.ID" data-count="@item.UsersCount" data-toggle="modal">Delete</button>
                 </td>
             </tr>
         }
@@ -50,4 +50,25 @@
 
 <a href="@Url.Action("CreateRole")" class="btn btn-primary">Create New</a>
 
-<script src="~/js/Roles/EditPermissionsOfRole.js"></script>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel"><b>Confirmation</b></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer" id="confirmFooter">
+                <button type="button" id="deleteRole" class="btn btn-danger" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+            </div>
+            <div class="modal-footer" id="informFooter">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/Roles/Index.js"></script>

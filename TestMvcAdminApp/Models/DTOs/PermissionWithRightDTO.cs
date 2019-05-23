@@ -8,5 +8,6 @@ namespace TestMvcAdminApp.Models {
         public int RightID { get; set; }
         public string RightName { get; set; }
         public string RightDescription { get; set; }
+        public int RolesCount { get; set; }
     }
 }

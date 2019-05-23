@@ -14,6 +14,7 @@ using TestMvcAdminApp.Repositories;
 namespace MvcCoreAdminApp.Controllers {
 
     [Authorize]
+    [Route("roles")]
     public class RolesController : Controller {
 
         private readonly IServiceProvider _serviceProvider;
@@ -22,16 +23,18 @@ namespace MvcCoreAdminApp.Controllers {
             _serviceProvider = serviceProvider;
         }
 
+        [ClaimRequirement]
         public IActionResult Index() {
             var model = AdminRepository.GetAllRoles();
 
             var allRolesWithPermissions = new List<RoleWithPermissions>();
 
-            allRolesWithPermissions = model.GroupBy(x => new { x.ID, x.Name, x.Description }).Select(y =>
+            allRolesWithPermissions = model.GroupBy(x => new { x.ID, x.Name, x.Description, x.UsersCount}).Select(y =>
               new RoleWithPermissions {
                   ID = y.Key.ID,
                   Name = y.Key.Name,
                   Description = y.Key.Description,
+                  UsersCount = y.Key.UsersCount,
                   Permissions = y.Select(z => new Permission { ID = z.PermissionID, Name = z.PermissionName, Description = z.PermissionDescription }).ToList()
               }).ToList();
 
@@ -39,12 +42,12 @@ namespace MvcCoreAdminApp.Controllers {
         }
 
         [ClaimRequirement]
-        [HttpGet, Route("Roles/CreateNew")]
+        [HttpGet, Route("create-new")]
         public IActionResult CreateRole() {
             return View();
         }
 
-        [HttpPost, Route("Roles/CreateNew")]
+        [HttpPost, Route("create-new")]
         public async Task<IActionResult> CreateRole(Role model) {
             var roleManager = _serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             if (!ModelState.IsValid) {
@@ -59,14 +62,14 @@ namespace MvcCoreAdminApp.Controllers {
         }
 
         [ClaimRequirement]
-        [HttpGet, Route("Roles/{RoleID}")]
+        [HttpGet, Route("{roleID}")]
         public IActionResult EditPermissionsOfRole(int roleID) {
             var permissionsList = AdminRepository.GetPermissionsByRoleID(roleID);
             var permissions = permissionsList.FirstOrDefault();
             return View(permissions);
         }
 
-        [HttpPost, Route("Roles/{RoleID}")]
+        [HttpPost, Route("{roleID}")]
         public async Task<IActionResult> EditPermissionsOfRole(PermissionsForRoleDTO model) {
             var roleManager = _serviceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
             var rolePermissions = new List<AssignPermissionsToRole>();
@@ -121,6 +124,15 @@ namespace MvcCoreAdminApp.Controllers {
             }
             await HttpContext.RefreshLoginAsync();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet, Route("delete")]
+        public IActionResult DeleteRole(int roleID) {
+            var count = AdminRepository.GetUsersCountForRole(roleID);
+            var result = 0;
+            if (count == 0)
+                result = AdminRepository.DeleteRole(roleID);
+            return Json(result);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace TestMvcAdminApp.Models {
         public int PermissionID { get; set; }
         public string PermissionName { get; set; }
         public string PermissionDescription { get; set; }
+        public int UsersCount { get; set; }
     }
 }

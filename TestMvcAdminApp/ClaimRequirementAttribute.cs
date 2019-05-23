@@ -17,7 +17,7 @@ public class ClaimRequirementAttribute : ActionFilterAttribute, IAuthorizationFi
         if (!hasClaim) {
             // Set the response code to 401.
             context.HttpContext.Response.StatusCode = 401;
-            context.Result = new RedirectResult("~/Account/AuthorizeFailed");
+            context.Result = new RedirectResult("~/account/authorize-failed");
         }
     }
 }

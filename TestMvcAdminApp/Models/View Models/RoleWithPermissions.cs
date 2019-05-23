@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 namespace TestMvcAdminApp.Models {
     public class RoleWithPermissions : Role {
         public List<Permission> Permissions { get; set; }
+        public int UsersCount { get; set; }
     }
 }

@@ -64,7 +64,8 @@ namespace TestMvcAdminApp.Repositories {
                             Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
                             PermissionID = item["PermissionID"] == DBNull.Value ? 0 : Convert.ToInt32(item["PermissionID"]),
                             PermissionName = item["PermissionName"] == DBNull.Value ? "" : Convert.ToString(item["PermissionName"]),
-                            PermissionDescription = item["PermissionDescription"] == DBNull.Value ? "" : Convert.ToString(item["PermissionDescription"])
+                            PermissionDescription = item["PermissionDescription"] == DBNull.Value ? "" : Convert.ToString(item["PermissionDescription"]),
+                            UsersCount = item["UsersCount"] == DBNull.Value ? 0 : Convert.ToInt32(item["UsersCount"])
                         });
                     }
                 }
@@ -94,7 +95,8 @@ namespace TestMvcAdminApp.Repositories {
                             Description = item["Description"] == DBNull.Value ? "" : Convert.ToString(item["Description"]),
                             RightID = item["RightID"] == DBNull.Value ? 0 : Convert.ToInt32(item["RightID"]),
                             RightName = item["RightName"] == DBNull.Value ? "" : Convert.ToString(item["RightName"]),
-                            RightDescription = item["RightDescription"] == DBNull.Value ? "" : Convert.ToString(item["RightDescription"])
+                            RightDescription = item["RightDescription"] == DBNull.Value ? "" : Convert.ToString(item["RightDescription"]),
+                            RolesCount = item["RolesCount"] == DBNull.Value ? 0 : Convert.ToInt32(item["RolesCount"])
                         });
                     }
                 }
@@ -142,13 +144,12 @@ namespace TestMvcAdminApp.Repositories {
 
                     /* reading multiple DataSet */
                     foreach (DataRow item in ds.Tables[0].Rows) {
-                        data.Add(item[0] == DBNull.Value ? "" : Convert.ToString
-(item[0]));
+                        data.Add(item[0] == DBNull.Value ? "" : Convert.ToString(item[0]));
                     }
                 }
             }
             return data;
-        }    
+        }
 
         #endregion
 
@@ -526,7 +527,7 @@ namespace TestMvcAdminApp.Repositories {
 
         public static string GetRightNameByRightID(int rightID) {
 
-            string roleName = "";
+            string rightName = "";
 
             using (SqlConnection con = new SqlConnection(Helper.Connection())) {
                 using (SqlCommand cmd = new SqlCommand("GetRightNameByRightID", con)) {
@@ -542,13 +543,85 @@ namespace TestMvcAdminApp.Repositories {
 
                     /* reading multiple DataSet */
                     foreach (DataRow item in ds.Tables[0].Rows) {
-                        roleName = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]);
+                        rightName = item["Name"] == DBNull.Value ? "" : Convert.ToString(item["Name"]);
                     }
                 }
             }
-            return roleName;
+            return rightName;
         }
 
         #endregion
+
+        #region Delete Role / Permission 
+        public static int DeleteRole(int roleID) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("DeleteRole", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleID", roleID);
+                    con.Open();
+                    result = cmd.ExecuteNonQuery();
+                }
+
+            }
+            return result;
+        }
+
+        public static int DeletePermission(int permissionID) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("DeletePermission", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PermissionID", permissionID);
+                    con.Open();
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            return result;
+        }
+
+        #endregion
+
+        public static int GetRolesCountForPermission(int permissionID) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetRolesCountForPermission", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@PermissionID", permissionID);
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        result = item[0] == DBNull.Value ? 0 : Convert.ToInt32(item[0]);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static int GetUsersCountForRole(int roleID) {
+            var result = 0;
+            using (SqlConnection con = new SqlConnection(Helper.Connection())) {
+                using (SqlCommand cmd = new SqlCommand("GetUsersCountForRole", con)) {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@RoleID", roleID);
+                    con.Open();
+                    /* Create instance of DataAdapter to read multiple DataSet */
+                    var da = new SqlDataAdapter(cmd);
+                    var ds = new DataSet();
+                    da.Fill(ds);
+
+                    /* reading multiple DataSet */
+                    foreach (DataRow item in ds.Tables[0].Rows) {
+                        result =  item[0] == DBNull.Value ? 0 : Convert.ToInt32(item[0]);
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

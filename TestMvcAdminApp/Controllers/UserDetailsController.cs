@@ -11,6 +11,7 @@ using TestMvcAdminApp.Repositories;
 namespace MvcCoreAdminApp.Controllers {
 
     [Authorize]
+    [Route("user-details")]
     public class UserDetailsController : Controller {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -39,7 +40,7 @@ namespace MvcCoreAdminApp.Controllers {
         }
 
         [ClaimRequirement]
-        [HttpGet, Route("UserDetails/{UserID}")]
+        [HttpGet, Route("{userID}")]
         public IActionResult EditRolesOfUser(int userID) {
             var rolesList = AdminRepository.GetRolesByUserID(userID);
             var roles = rolesList.FirstOrDefault();
@@ -47,7 +48,7 @@ namespace MvcCoreAdminApp.Controllers {
         }
 
         [ClaimRequirement]
-        [HttpPost, Route("UserDetails/{UserID}")]
+        [HttpPost, Route("{userID}")]
         public async Task<IActionResult> EditRolesOfUser(RolesForUserDTO model) {
             var userRoles = new List<AssignRolesToUser>();
             var roleIDs = new List<string>();

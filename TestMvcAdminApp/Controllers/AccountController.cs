@@ -8,6 +8,7 @@ using TestMvcAdminApp.Repositories;
 namespace MvcCoreAdminApp.Controllers {
 
     [AllowAnonymous]
+    [Route("account")]
     public class AccountController : Controller {
 
         private readonly UserManager<ApplicationUser> _userManager;
@@ -23,12 +24,12 @@ namespace MvcCoreAdminApp.Controllers {
             _roleManager = roleManager;
         }
 
-        [HttpGet]
+        [HttpGet, Route("register")]
         public IActionResult Register(string returnUrl = null) {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, Route("register")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterUser model, string returnUrl = null) {
             if (ModelState.IsValid) {
@@ -57,14 +58,13 @@ namespace MvcCoreAdminApp.Controllers {
             return View(model);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
+        [HttpGet, Route("login")]
         public IActionResult Login(string returnUrl = null) {
             var loginUser = new LoginUser { ReturnUrl = returnUrl };
             return View(loginUser);
         }
 
-        [HttpPost]
+        [HttpPost, Route("login")]
         public async Task<IActionResult> Login(LoginUser model) {
             if (ModelState.IsValid) {
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
@@ -80,12 +80,13 @@ namespace MvcCoreAdminApp.Controllers {
             return View(model);
         }
 
-        [HttpGet]
+        [HttpGet, Route("logout")]
         public async Task<IActionResult> Logout() {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
 
+        [HttpGet, Route("authorize-failed")]
         public IActionResult AuthorizeFailed() {
             return View();
         }
