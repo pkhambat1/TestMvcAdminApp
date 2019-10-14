@@ -13,7 +13,7 @@ using TestMvcAdminApp.Repositories;
 
 namespace MvcCoreAdminApp.Controllers {
 
-    [Authorize]
+    // [Authorize]
     [Route("roles")]
     public class RolesController : Controller {
 
@@ -23,7 +23,7 @@ namespace MvcCoreAdminApp.Controllers {
             _serviceProvider = serviceProvider;
         }
 
-        [ClaimRequirement]
+        //[ClaimRequirement]
         public IActionResult Index() {
             var model = AdminRepository.GetAllRoles();
 
@@ -41,7 +41,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(allRolesWithPermissions);
         }
 
-        [ClaimRequirement]
+        //[ClaimRequirement]
         [HttpGet, Route("create-new")]
         public IActionResult CreateRole() {
             return View();
@@ -61,7 +61,7 @@ namespace MvcCoreAdminApp.Controllers {
             return RedirectToAction("Index");
         }
 
-        [ClaimRequirement]
+        //[ClaimRequirement]
         [HttpGet, Route("{roleID}")]
         public IActionResult EditPermissionsOfRole(int roleID) {
             var permissionsList = AdminRepository.GetPermissionsByRoleID(roleID);

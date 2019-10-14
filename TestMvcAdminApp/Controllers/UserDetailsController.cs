@@ -10,7 +10,7 @@ using TestMvcAdminApp.Repositories;
 
 namespace MvcCoreAdminApp.Controllers {
 
-    [Authorize]
+   //  [Authorize]
     [Route("user-details")]
     public class UserDetailsController : Controller {
 
@@ -20,7 +20,7 @@ namespace MvcCoreAdminApp.Controllers {
             _userManager = userManager;
         }
 
-        [ClaimRequirement]
+        //[ClaimRequirement]
         public IActionResult Index() {
             var model = AdminRepository.GetAllUsers();
 
@@ -39,7 +39,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(allUsersWithRoles);
         }
 
-        [ClaimRequirement]
+        //[ClaimRequirement]
         [HttpGet, Route("{userID}")]
         public IActionResult EditRolesOfUser(int userID) {
             var rolesList = AdminRepository.GetRolesByUserID(userID);
@@ -47,7 +47,7 @@ namespace MvcCoreAdminApp.Controllers {
             return View(roles);
         }
 
-        [ClaimRequirement]
+        //[ClaimRequirement]
         [HttpPost, Route("{userID}")]
         public async Task<IActionResult> EditRolesOfUser(RolesForUserDTO model) {
             var userRoles = new List<AssignRolesToUser>();
