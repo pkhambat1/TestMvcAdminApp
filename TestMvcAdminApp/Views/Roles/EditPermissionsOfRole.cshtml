@@ -7,8 +7,7 @@
 
 <h2>Assign Permissions to <i>@Model.RoleName</i> Role</h2>
 
-<div class="container">
-    <div class="row">
+<div class="row">
         <div class="col-md-6 col-12">
             @using (Html.BeginForm("EditPermissionsOfRole", "Roles", FormMethod.Post)) {
                 @Html.HiddenFor(m => m.RoleName)
@@ -51,7 +50,6 @@
         </div>
     </div>
 
-</div>
 <div>
     <a href="@Url.Action("Index")">Back to List</a>
 </div>

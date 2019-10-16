@@ -32,8 +32,8 @@
         "ASPNETCORE_HTTPS_PORT": "44306"
       },
       "httpPort": 64467,
-      "useSSL": true,
-      "sslPort": 44306
+      "sslPort": 44306,
+      "useSSL": true
     }
   }
 }
