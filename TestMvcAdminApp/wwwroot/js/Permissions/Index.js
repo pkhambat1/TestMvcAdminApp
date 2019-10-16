@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $('#detetePermission').click(deletePermission);
+    $('#deletePermission').click(deletePermission);
 });
 
 var deletePermission = function () {

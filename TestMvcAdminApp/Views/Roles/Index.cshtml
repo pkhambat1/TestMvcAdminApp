@@ -18,7 +18,7 @@
             <th style="width: 50%">
                 Permission(s)
             </th>
-            <th style="width: 240px">
+            <th style="width: 230px">
                 Actions
             </th>
         </tr>
@@ -40,15 +40,15 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Assign Permissions", "EditPermissionsOfRole", "Roles", new { roleID = item.ID }, new { @class = "btn btn-info" })
-                    <button class="btn btn-danger deleteRole text-center" id="confirmDelete" data-target="#deleteModal" data-id="@item.ID" data-count="@item.UsersCount" data-toggle="modal">Delete</button>
+                    @Html.ActionLink("Assign Permissions", "EditPermissionsOfRole", "Roles", new { roleID = item.ID }, new { @class = "btn btn-primary" })
+                    <button class="btn btn-danger deleteRole text-center" id="confirmDelete" data-target="#deleteModal" data-id="@item.ID" data-count="@item.UsersCount" data-toggle="modal"><i class="fas fa-trash-alt"></i></button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<a href="@Url.Action("CreateRole")" class="btn btn-primary">Create New</a>
+<a href="@Url.Action("CreateRole")" class="btn btn-dark">Create New</a>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -62,10 +62,10 @@
             <div class="modal-body" id="modalBody"></div>
             <div class="modal-footer" id="confirmFooter">
                 <button type="button" id="deleteRole" class="btn btn-danger" data-dismiss="modal">Yes</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">No</button>
             </div>
             <div class="modal-footer" id="informFooter">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>

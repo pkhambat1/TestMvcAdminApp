@@ -10,19 +10,19 @@
 <table class="table table-responsive table-bordered table-striped">
     <thead>
         <tr>
-            <th>
+            <th width="200px">
                 Name
             </th>
-            <th>
+            <th width="150px">
                 @Html.DisplayNameFor(model => model.CompanyName)
             </th>
-            <th>
+            <th width="180px">
                 @Html.DisplayNameFor(model => model.Mobile)
             </th>
-            <th style="width: 50%">
+            <th width="40%">
                 Role(s)
             </th>
-            <th style="width: 75px">
+            <th width="200px">
                 Actions
             </th>
         </tr>
@@ -47,7 +47,7 @@
                     }
                 </td>
                 <td>
-                    @Html.ActionLink("Assign Roles", "EditRolesOfUser", "UserDetails", new { userID = item.ID }, new { @class = "btn btn-info btn-block" })
+                    @Html.ActionLink("Assign Roles", "EditRolesOfUser", "UserDetails", new { userID = item.ID }, new { @class = "btn btn-primary btn-block" })
                 </td>
             </tr>
         }

@@ -7,7 +7,7 @@ using TestMvcAdminApp.Data;
 using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace MvcCoreAdminApp.Controllers {
-    // [Authorize]
+    [Authorize]
     public class HomeController : Controller {
 
         private readonly ApplicationDbContext _context;

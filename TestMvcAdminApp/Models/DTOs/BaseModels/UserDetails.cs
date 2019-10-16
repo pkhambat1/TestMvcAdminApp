@@ -12,7 +12,7 @@ namespace TestMvcAdminApp.Models {
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
         public string Mobile { get; set; }
-        [Display(Name = "Company Name")]
+        [Display(Name = "Company")]
         public string CompanyName { get; set; }
     }
 }

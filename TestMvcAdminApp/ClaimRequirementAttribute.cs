@@ -14,10 +14,10 @@ public class ClaimRequirementAttribute : ActionFilterAttribute, IAuthorizationFi
         var claim = new Claim(claimName, "True");
         var hasClaim = context.HttpContext.User.Claims.Any(c => c.Type == claim.Type && c.Value == claim.Value);
 
-        if (!hasClaim) {
-            // Set the response code to 401.
-            context.HttpContext.Response.StatusCode = 401;
-            context.Result = new RedirectResult("~/account/authorize-failed");
-        }
+        //if (!hasClaim) {
+        //    // Set the response code to 401.
+        //    context.HttpContext.Response.StatusCode = 401;
+        //    context.Result = new RedirectResult("~/account/authorize-failed");
+        //}
     }
 }

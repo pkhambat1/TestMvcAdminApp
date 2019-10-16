@@ -5,7 +5,7 @@
     ViewData["Title"] = "Assign Roles";
 }
 
-<h2>Assign Roles to @Model.FirstName @Model.LastName</h2>
+<h2>Assign Roles to <i>@Model.FirstName @Model.LastName</i> </h2>
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-12">
@@ -13,11 +13,11 @@
                 <table class="table table-responsive table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th style="width: 50px"></th>
-                            <th>
+                            <th></th>
+                            <th style="width:200px;">
                                 @Html.DisplayNameFor(model => model.RolesWithIsAssigned.FirstOrDefault().Name)
                             </th>
-                            <th>
+                            <th style="width:300px;">
                                 @Html.DisplayNameFor(model => model.RolesWithIsAssigned.FirstOrDefault().Description)
                             </th>
                         </tr>
@@ -43,7 +43,7 @@
                     </tbody>
                 </table>
                 <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Update</button>
+                    <button class="btn btn-dark" type="submit">Update</button>
                 </div>
             }
         </div>

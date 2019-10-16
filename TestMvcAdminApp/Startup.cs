@@ -117,7 +117,7 @@ namespace TestMvcAdminApp {
         public async Task AssignSuperAdmin(IServiceProvider services) {
             var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
             //Assign Admin role to the main User here we have given our newly registered login id for Admin management  
-            ApplicationUser user = await userManager.FindByEmailAsync("pezanne2@email.com");
+            ApplicationUser user = await userManager.FindByEmailAsync("pezanne@email.com");
                 await userManager.AddToRoleAsync(user, "IT Admin");
         }
     }
