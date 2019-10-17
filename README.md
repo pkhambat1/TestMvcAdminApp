@@ -7,3 +7,8 @@ The website not only locks out users that are not logged in but it also checks f
 Users can be assigned roles such as "Executive", "Manager", "Content Creator", etc. which will determine the permissions they have. For instance, executives can read, add and modify all other users' roles, the permissions of each role and the rights of each permission. Managers can only view the same. The website successfully demonstrates how in real time these authorizations can be modified and immediately reflect in a user either gaining or losing access to a respective page.
 
 The ContentHub structure of authorizations can be used in internal-use admin websites to establish nuance in the amount of access a user (employee) is granted.
+
+Usage
+
+Log in using username `pezanne` and password `Pezanne@1234`. Observe that all pages are accessible, since the role assigned to `pezanne` is `executive`
+Then log out and log in with username `jon` and password `Jon@1234`. The same pages will now be inaccessible.
